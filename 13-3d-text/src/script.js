@@ -26,7 +26,19 @@ const fontLoader = new FontLoader();
 const matcapTexture = textureLoader.load("/textures/matcaps/pink.png");
 
 fontLoader.load("/fonts/moonrocks.typeface.json", (font) => {
-  const textGeometry = new TextGeometry("Good Night", {
+  const goodTextGeometry = new TextGeometry("Good", {
+    font: font,
+    size: 0.5,
+    height: 0.2,
+    curveSegments: 10,
+    bevelEnabled: true,
+    bevelThickness: 0.03,
+    bevelSize: 0.02,
+    bevelOffset: 0,
+    bevelSegments: 3,
+  });
+
+  const nightTextGeometry = new TextGeometry("Night", {
     font: font,
     size: 0.5,
     height: 0.2,
@@ -48,16 +60,17 @@ fontLoader.load("/fonts/moonrocks.typeface.json", (font) => {
     opacity: 0.9,
   });
 
-  // gui.addColor(material, "color");
-  // gui.addColor(textMaterial, "color");
+  const goodText = new THREE.Mesh(goodTextGeometry, textMaterial);
+  const nightText = new THREE.Mesh(nightTextGeometry, textMaterial);
 
-  const text = new THREE.Mesh(textGeometry, textMaterial);
-  console.log(text);
+  nightText.position.y = -0.8;
+  nightText.position.x = -0.5;
 
-  textGeometry.center();
-  console.log(textGeometry.boundingBox);
+  goodText.position.x = -1.5;
+  goodText.position.y = 0.2;
 
-  scene.add(text);
+  scene.add(goodText);
+  scene.add(nightText);
   const donutGeometry = new THREE.OctahedronGeometry();
   let range = 0.5 - 0.2;
 
@@ -80,16 +93,6 @@ fontLoader.load("/fonts/moonrocks.typeface.json", (font) => {
 /**
  * Object
  */
-const cube = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial()
-);
-
-// scene.add(cube);
-
-// gui.addColor(parameters, "color").onChange(() => {
-//   material.color.set(parameters.color);
-// });
 
 /**
  * Sizes
@@ -151,14 +154,16 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.x = 1;
-camera.position.y = 1;
+camera.position.x = 0;
+camera.position.y = 0;
 camera.position.z = 2;
 scene.add(camera);
 
 // Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
+controls.minDistance = 2;
+controls.maxDistance = 6;
 
 /**
  * Renderer
@@ -180,8 +185,6 @@ const tick = () => {
 
   scene.traverse(function (child) {
     if (child.name === "donut") {
-      // child.rotation.x = 1 * elapsedTime;
-      // child.rotation.y = 1 * elapsedTime;
       child.rotation.x += 0.005;
       child.rotation.y += 0.005;
     }
