@@ -215,8 +215,12 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
  */
 const clock = new THREE.Clock();
 
+console.log(scene);
+
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  points.rotation.y += 0.002;
 
   // Update controls
   controls.update();
