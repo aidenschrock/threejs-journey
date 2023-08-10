@@ -26,7 +26,7 @@ const fontLoader = new FontLoader();
 const matcapTexture = textureLoader.load("/textures/matcaps/pink.png");
 
 fontLoader.load("/fonts/moonrocks.typeface.json", (font) => {
-  const goodTextGeometry = new TextGeometry("Good", {
+  const textConfig = {
     font: font,
     size: 0.5,
     height: 0.2,
@@ -36,19 +36,15 @@ fontLoader.load("/fonts/moonrocks.typeface.json", (font) => {
     bevelSize: 0.02,
     bevelOffset: 0,
     bevelSegments: 3,
-  });
+  };
 
-  const nightTextGeometry = new TextGeometry("Night", {
-    font: font,
-    size: 0.5,
-    height: 0.2,
-    curveSegments: 10,
-    bevelEnabled: true,
-    bevelThickness: 0.03,
-    bevelSize: 0.02,
-    bevelOffset: 0,
-    bevelSegments: 3,
-  });
+  // const goodTextGeometry = new TextGeometry("Good", textConfig);
+  const gTextGeometry = new TextGeometry("G", textConfig);
+  const o1TextGeometry = new TextGeometry("O", textConfig);
+  const o2TextGeometry = new TextGeometry("O", textConfig);
+  const dTextGeometry = new TextGeometry("D", textConfig);
+
+  const nightTextGeometry = new TextGeometry("Night", textConfig);
 
   const textMaterial = new THREE.MeshStandardMaterial({
     color: 0xde95f9,
